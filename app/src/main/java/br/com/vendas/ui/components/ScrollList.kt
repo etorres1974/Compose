@@ -13,9 +13,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import br.com.vendas.ui.theme.Constants.P
+import br.com.vendas.ui.theme.Sizes.P
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+
 
 @Composable
 fun <T> ScrollingList(

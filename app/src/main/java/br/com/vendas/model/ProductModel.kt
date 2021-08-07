@@ -7,10 +7,9 @@ interface ProductModel {
     val name: String
 
     companion object {
-        var counter = 0
         data class MockProduct(
             override val id: String = UUID.randomUUID().toString(),
-            override val name: String = "Mock ${counter++}"
+            override val name: String = "Mock "
         ) : ProductModel
 
         fun mockList(amount: Int): List<ProductModel> = mutableListOf<ProductModel>().apply {
