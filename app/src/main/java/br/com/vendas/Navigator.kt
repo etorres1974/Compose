@@ -24,7 +24,7 @@ import br.com.vendas.ui.screens.Settings
 sealed class Screen(
     val route: String,
     @StringRes val resourceId: Int,
-    val icon: ImageVector
+    private val icon: ImageVector
 ) {
     object Home : Screen(
         "profile",

@@ -1,21 +1,19 @@
 package br.com.vendas.ui.screens
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.navigation.NavHostController
 import br.com.vendas.ui.components.CustomSlider
 import br.com.vendas.ui.theme.Sizes
 import br.com.vendas.ui.theme.Sizes.P
 import br.com.vendas.ui.theme.recomposeOnChange
-import java.util.*
 
 @Composable
 fun Settings(navController: NavHostController) {
     Column(modifier = Modifier.padding(P)) {
-        Text(text = "Settings")
         SettingSlider()
     }
 }

@@ -3,11 +3,12 @@ package br.com.vendas.ui.components
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.vendas.VendaApp
 import br.com.vendas.model.ProductModel
-import br.com.vendas.ui.theme.VendaTheme
+import localDataSource.mockList
 
 @Composable
 fun Product(product: ProductModel) {
@@ -23,12 +24,14 @@ fun ProductList(list: List<ProductModel>) {
     }
 }
 
+@Composable
+fun ProductList(state: State<List<ProductModel>>) {
+    val list by state
+    ProductList(list = list)
+}
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    VendaTheme {
-        VendaApp {
-            ProductList(list = ProductModel.mockList(100))
-        }
-    }
+    ProductList(list = mockList(5))
 }
