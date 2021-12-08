@@ -15,7 +15,8 @@ class MockDataSource() : LocalDataContract {
 
 data class MockProduct(
     override val id: String = UUID.randomUUID().toString(),
-    override val name: String = "Mock"
+    override val name: String = "Mock",
+    override val image : String = androidLogo
 ) : ProductModel
 
 fun mockList(amount: Int): List<ProductModel> = mutableListOf<ProductModel>().apply {
@@ -25,3 +26,5 @@ fun mockList(amount: Int): List<ProductModel> = mutableListOf<ProductModel>().ap
             break
     }
 }.toList()
+
+val androidLogo = "https://developer.android.com/images/brand/Android_Robot.png"

@@ -16,7 +16,7 @@ object Sizes {
     var G = M.next()
     var GG = G.next()
 
-    fun update(razao: Double = 1.61803398875, base: Double = Math.PI): UUID? {
+    fun update(razao: Double = this.razao, base: Double = this.base): UUID? {
          this.razao = razao
          this.base = base
          PP = (base * razao).roundToInt().dp

@@ -19,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.vendas.ui.screens.Home
+import br.com.vendas.ui.screens.NewProducts
 import br.com.vendas.ui.screens.Settings
 
 sealed class Screen(
@@ -37,6 +38,12 @@ sealed class Screen(
         Icons.Filled.Settings
     )
 
+    object NewProducts : Screen(
+        "newProducts",
+        R.string.nav_new_products,
+        Icons.Filled.Favorite
+    )
+
     @Composable
     fun Icon() = Icon(icon, contentDescription = null)
 
@@ -47,6 +54,7 @@ sealed class Screen(
 val items = listOf(
     Screen.Home,
     Screen.Settings,
+    Screen.NewProducts,
 )
 
 @Composable
@@ -89,6 +97,7 @@ fun BottomNavBar() {
         ) {
             composable(Screen.Home.route) { Home(navController) }
             composable(Screen.Settings.route) { Settings(navController) }
+            composable(Screen.NewProducts.route) { NewProducts(navController) }
         }
     }
 }
