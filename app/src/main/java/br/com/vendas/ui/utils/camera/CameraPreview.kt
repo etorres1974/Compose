@@ -1,26 +1,39 @@
 package br.com.vendas.ui.utils.camera
 
+import android.content.Context
 import android.util.Log
 import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY
 import androidx.camera.core.Preview
+import androidx.camera.core.UseCase
 import androidx.camera.view.PreviewView
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Button
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.LifecycleOwner
+import br.com.vendas.ui.utils.executor
 import br.com.vendas.ui.utils.getCameraProvider
 import kotlinx.coroutines.launch
+import java.io.File
 
 @Composable
-fun CameraPreview(
+private fun CameraPreview(
     modifier: Modifier = Modifier,
     scaleType: PreviewView.ScaleType = PreviewView.ScaleType.FILL_CENTER,
-    cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+    onUseCase : (UseCase) -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val lifecycleOwner = LocalLifecycleOwner.current
     AndroidView(
         modifier = modifier,
         factory = { context ->
@@ -31,28 +44,80 @@ fun CameraPreview(
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
             }
-
-            // CameraX Preview UseCase
-            val previewUseCase = Preview.Builder()
+            onUseCase(Preview.Builder()
                 .build()
-                .also {
+                .also{
                     it.setSurfaceProvider(previewView.surfaceProvider)
                 }
-
-            coroutineScope.launch {
-                val cameraProvider = context.getCameraProvider()
-                try {
-                    // Must unbind the use-cases before rebinding them.
-                    cameraProvider.unbindAll()
-                    cameraProvider.bindToLifecycle(
-                        lifecycleOwner, cameraSelector, previewUseCase
-                    )
-                } catch (ex: Exception) {
-                    Log.e("CameraPreview", "Use case binding failed", ex)
-                }
-            }
-
+            )
             previewView
         }
     )
 }
+
+@Composable
+fun CameraCapture(
+    modifier: Modifier = Modifier,
+    cameraSelector: CameraSelector = CameraSelector.DEFAULT_BACK_CAMERA,
+    onImageFile: (File) -> Unit = { }
+) {
+    Box(modifier = modifier) {
+        val context = LocalContext.current
+        val lifecycleOwner = LocalLifecycleOwner.current
+        var previewUseCase by remember { mutableStateOf<UseCase>(Preview.Builder().build()) }
+        val coroutineScope = rememberCoroutineScope()
+        val imageCaptureUseCase by remember {
+            mutableStateOf(
+                ImageCapture.Builder()
+                    .setCaptureMode(CAPTURE_MODE_MAXIMIZE_QUALITY)
+                    .build()
+            )
+        }
+
+        CameraPreview(
+            modifier = Modifier.fillMaxSize(),
+            onUseCase = {
+                previewUseCase = it
+            }
+        )
+        Button(
+            modifier = Modifier
+                .wrapContentSize()
+                .padding(16.dp)
+                .align(Alignment.BottomCenter),
+            onClick = {
+                coroutineScope.launch {
+                    imageCaptureUseCase.takePicture(context.executor).let{
+                        onImageFile(it)
+                    }
+                }
+            }
+        ) {
+            Text("Click!")
+        }
+        cameraBindings(previewUseCase, context, lifecycleOwner, cameraSelector, imageCaptureUseCase)
+    }
+}
+
+@Composable
+private fun cameraBindings(
+    previewUseCase: UseCase,
+    context: Context,
+    lifecycleOwner: LifecycleOwner,
+    cameraSelector: CameraSelector,
+    imageCaptureUseCase: ImageCapture
+) {
+    LaunchedEffect(previewUseCase) {
+        val cameraProvider = context.getCameraProvider()
+        try {
+            // Must unbind the use-cases before rebinding them.
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(
+                lifecycleOwner, cameraSelector, previewUseCase, imageCaptureUseCase
+            )
+        } catch (ex: Exception) {
+            Log.e("CameraCapture", "Failed to bind camera use cases", ex)
+        }
+    }
+}
+
