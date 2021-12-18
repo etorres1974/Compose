@@ -10,17 +10,14 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import br.com.vendas.model.ProductModel
-import br.com.vendas.ui.theme.Sizes.G
+import br.com.vendas.category.mockList
+import br.com.vendas.product.MockProduct
+import br.com.vendas.product.ProductModel
 import br.com.vendas.ui.theme.Sizes.GG
-import br.com.vendas.ui.theme.Sizes.P
 import br.com.vendas.ui.theme.Sizes.PP
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import localDataSource.mockList
 
 @ExperimentalCoilApi
 @Composable
@@ -52,5 +49,5 @@ fun ProductList(state: State<List<ProductModel>>) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    ProductList(list = mockList(5))
+    ProductList(list = mockList<ProductModel>(5, ::MockProduct))
 }

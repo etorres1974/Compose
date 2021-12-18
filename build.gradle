@@ -1,18 +1,19 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext {
-        compose_version = '1.0.5'
-        kotlin_compose_compiler_version = '1.5.31'
-        camerax_stable_version = '1.0.1'
-        camerax_alpha_version = '1.0.0-alpha28'
-        room_version = "2.3.0"
+        compose_version = '1.1.0-rc01'
+        kotlin_compose_compiler_version = '1.6.0'
+        camerax_stable_version = '1.0.2'
+        camerax_alpha_version = '1.0.0-alpha32'
+        room_version = "2.4.0"
+        koin_version= "3.1.4"
     }
     repositories {
         google()
         mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.3"
+        classpath "com.android.tools.build:gradle:7.0.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_compose_compiler_version"
 
         // NOTE: Do not place your application dependencies here; they belong

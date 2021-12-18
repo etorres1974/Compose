@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -57,7 +58,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_compose_compiler_version"
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-    implementation('androidx.navigation:navigation-compose:2.4.0-beta02')
+    implementation('androidx.navigation:navigation-compose:2.4.0-rc01')
 
     //AndroidCore
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -73,13 +74,13 @@ dependencies {
 
     //Room
     implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
     implementation("androidx.room:room-ktx:$room_version")
     testImplementation("androidx.room:room-testing:$room_version")
-    implementation('androidx.room:room-paging:2.4.0-rc01')
+    implementation("androidx.room:room-paging:$room_version")
 
     //Coils, images
-    implementation 'io.coil-kt:coil-compose:1.3.0'
+    implementation 'io.coil-kt:coil-compose:1.3.2'
 
     //https://medium.com/@dpisoni/building-a-simple-photo-app-with-jetpack-compose-camerax-and-coroutines-part-1-permissions-5576867215fb
     implementation 'com.google.accompanist:accompanist-systemuicontroller:0.21.4-beta'
@@ -90,4 +91,9 @@ dependencies {
     implementation "androidx.camera:camera-lifecycle:$camerax_stable_version"
     implementation "androidx.camera:camera-view:$camerax_alpha_version"
     implementation "io.coil-kt:coil-compose:1.3.2"
+
+    //Koin
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 }

@@ -7,11 +7,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Button
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import br.com.vendas.data.Category
 import br.com.vendas.ui.theme.Sizes.P
 
 import kotlinx.coroutines.CoroutineScope
@@ -32,17 +30,47 @@ fun <T> ScrollingList(
 }
 
 @Composable
-fun <T> ScrollingListLarge(list: List<T>, content: @Composable (T) -> Unit) {
+fun <T> ScrollingListLarge(list: List<T>, buttons : Boolean = false,  content: @Composable (T) -> Unit) {
     val scrollState = rememberLazyListState()
     Column {
-        Row {
-            CoroutineButton(action = scrollState::scrollToStart, buttonText = "Start")
-            CoroutineButton(action = { scrollState.scrollToEnd(list) }, buttonText = "End")
+        if(buttons) {
+            Row {
+                CoroutineButton(action = scrollState::scrollToStart, buttonText = "Start")
+                CoroutineButton(action = { scrollState.scrollToEnd(list) }, buttonText = "End")
+            }
         }
-
         ScrollingList(list = list, scrollState) {
             Row{
                 Text("${list.indexOf(it)} - ")
+                content(it)
+            }
+        }
+    }
+}
+
+@Composable
+fun <T> ScrollingListLarge(
+    state : State<List<T>>,
+    buttons: Boolean = false,
+    reversed : Boolean = true,
+    content: @Composable (T) -> Unit) {
+    val list = if(reversed) state.value.reversed() else state.value
+    val scrollState = rememberLazyListState()
+    Column {
+        if(buttons) {
+            Row {
+                CoroutineButton(action = scrollState::scrollToStart, buttonText = "Start")
+                CoroutineButton(action = { scrollState.scrollToEnd(list) }, buttonText = "End")
+            }
+        }
+        ScrollingList(list = list, scrollState) {
+            Row{
+                val index =
+                    if(reversed)
+                        list.size - list.indexOf(it)
+                    else
+                        list.indexOf(it)
+                Text("$index - ")
                 content(it)
             }
         }

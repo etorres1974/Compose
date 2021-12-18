@@ -9,17 +9,9 @@ import androidx.core.net.toUri
 import br.com.vendas.ui.utils.Permission
 import br.com.vendas.ui.utils.permissionNotAvaiable
 
+
 @Composable
-fun CameraSelect(modifier: Modifier = Modifier, onImageFile: (Uri) -> Unit) {
-    CameraCapture(
-        modifier = modifier,
-        onImageFile = { file ->
-            onImageFile(file.toUri())
-        }
-    )
-}
-@Composable
-fun CameraMode(modifier: Modifier = Modifier, onImageFile: (Uri) -> Unit){
+fun CameraSelect(modifier: Modifier = Modifier, onImageFile: (Uri) -> Unit){
     val context = LocalContext.current
     Permission(
         permission = Manifest.permission.CAMERA,
@@ -33,4 +25,14 @@ fun CameraMode(modifier: Modifier = Modifier, onImageFile: (Uri) -> Unit){
     ) {
         CameraMode(modifier = modifier, onImageFile = onImageFile)
     }
+}
+
+@Composable
+fun CameraMode(modifier: Modifier = Modifier, onImageFile: (Uri) -> Unit) {
+    CameraCapture(
+        modifier = modifier,
+        onImageFile = { file ->
+            onImageFile(file.toUri())
+        }
+    )
 }

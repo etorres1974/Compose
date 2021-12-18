@@ -10,15 +10,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import br.com.vendas.model.ProductModel
+import br.com.vendas.product.MockProduct
 import br.com.vendas.ui.components.Product
 import br.com.vendas.ui.theme.Sizes
 import br.com.vendas.ui.theme.VendaTheme
-import localDataSource.MockProduct
+import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
 
-    val viewModel : MainViewModel by viewModels()
+    val mainViewModel : MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
