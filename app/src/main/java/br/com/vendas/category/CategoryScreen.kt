@@ -10,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import br.com.vendas.contracts.toMutableStateList
-import br.com.vendas.data.Category
 import br.com.vendas.ui.components.CenteredColumn
 import br.com.vendas.ui.components.NamedButton
 import br.com.vendas.ui.components.ScrollingListLarge

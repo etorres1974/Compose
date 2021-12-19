@@ -9,7 +9,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import br.com.vendas.data.Category
 import br.com.vendas.ui.theme.Sizes.P
 
 import kotlinx.coroutines.CoroutineScope

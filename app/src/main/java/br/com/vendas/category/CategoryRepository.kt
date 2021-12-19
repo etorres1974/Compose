@@ -3,8 +3,7 @@ package br.com.vendas.category
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.vendas.contracts.RepositoryModel
-import br.com.vendas.data.Category
-import br.com.vendas.data.CategoryDao
+import br.com.vendas.contracts.mockList
 
 class CategoryRepo(
     private val categoryDao: CategoryDao
@@ -31,11 +30,5 @@ class MockCategoryRepository() : RepositoryModel<Category>  {
     }
 }
 
-fun <T> mockList(amount: Int, constructor : (String) -> T): List<T> = mutableListOf<T>().apply {
-    for (i in 1..amount) {
-        add( constructor("$i"))
-        if(i <= 0)
-            break
-    }
-}.toList()
+
 

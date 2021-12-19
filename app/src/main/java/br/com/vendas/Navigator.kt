@@ -20,8 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import br.com.vendas.category.CategoryScreen
+import br.com.vendas.ui.components.ProductScreen
 import br.com.vendas.ui.screens.Home
-import br.com.vendas.ui.screens.NewProducts
 import br.com.vendas.ui.screens.Settings
 
 sealed class Screen(
@@ -80,7 +80,7 @@ fun BottomNavBar() {
         ) {
             composable(Screen.Home.route) { Home(navController) }
             composable(Screen.Settings.route) { Settings(navController) }
-            composable(Screen.NewProducts.route) { NewProducts(navController) }
+            composable(Screen.NewProducts.route) { ProductScreen(navController) }
             composable(Screen.Categories.route) { CategoryScreen(navController) }
         }
     }

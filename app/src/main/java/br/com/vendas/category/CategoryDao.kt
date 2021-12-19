@@ -1,10 +1,11 @@
-package br.com.vendas.data
+package br.com.vendas.category
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.Query
+import br.com.vendas.data.BaseDao
 
 @Entity(tableName = "category")
 data class Category(
@@ -13,7 +14,7 @@ data class Category(
 )
 
 @Dao
-abstract class CategoryDao : BaseDao<Category>{
+abstract class CategoryDao : BaseDao<Category> {
 
     @Query("Select * from category")
     abstract fun getData() : LiveData<List<Category>>
